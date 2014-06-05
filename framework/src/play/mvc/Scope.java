@@ -5,6 +5,7 @@ import java.lang.annotation.Annotation;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -66,7 +67,7 @@ public class Scope {
                 return;
             }
             try {
-                String flashData = CookieDataCodec.encode(data);
+                String flashData = CookieDataCodec.encode(out);
                 Http.Response.current().setCookie(COOKIE_PREFIX + "_FLASH", flashData, null, "/", null, COOKIE_SECURE);
             } catch (Exception e) {
                 throw new UnexpectedException("Flash serializationProblem", e);
@@ -336,7 +337,7 @@ public class Scope {
             return current.get();
         }
         boolean requestIsParsed;
-        public Map<String, String[]> data = new HashMap<String, String[]>();
+        public Map<String, String[]> data = new LinkedHashMap<String, String[]>();
 
         boolean rootParamsNodeIsGenerated = false;
         private RootParamNode rootParamNode = null;
